@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Sprawdź jakość powietrza!</h1>
+    <form method="post">
+        <input type="text" name="city" id="city_id" required>
+        <br>
+        <input type="date" name="date" id="date_id" required>
+        <br>
+        <button type="submit">Sprawdź</button>
+    </form>
+{% endblock %}
