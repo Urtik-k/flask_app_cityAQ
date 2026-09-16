@@ -29,74 +29,49 @@ def get_sensors(city):
             parameter = sensor.parameter.name
 
             if parameter not in available_parameters:
-                available_parameters[parameter] = {
-                    "sensor_id": sensor.id,
-                    "location_id": location.id,
-                    "location_name": location.name,
-                    "distance": location.distance,
-                    "unit": sensor.parameter.units
-                }
+                available_parameters[parameter] = []
+            available_parameters[parameter].append({
+                "sensor_id": sensor.id,
+                "location_id": location.id,
+                "location_name": location.name,
+                "distance": location.distance,
+                "unit": sensor.parameter.units
+            })
 
     api_client.close()
     return available_parameters
 
-def get_measurements(city,start_date,end_date):
+def get_measurements(city, start_date, end_date):
     api_client = OpenAQ(api_key=API_KEY)
+
     sensors = get_sensors(city)
     if sensors is None:
         api_client.close()
         return None
 
     measurements = {}
-    for parameter, sensor_data in sensors.items():
-        sensor_id = sensor_data["sensor_id"]
-        result = api_client.measurements.list(sensors_id=sensor_id, data="days", date_from=start_date, date_to=end_date, limit=100)
-        print(parameter)
-        print(result.results)
-        measurements[parameter] = result
+
+    for parameter, sensor_list in sensors.items():
+
+        for sensor_data in sensor_list:
+            sensor_id = sensor_data["sensor_id"]
+
+            result = api_client.measurements.list(
+                sensors_id=sensor_id,
+                data="days",
+                date_from=start_date,
+                date_to=end_date,
+                limit=100
+            )
+
+            if result.results:
+                measurements[parameter] = {
+                    "results": result.results,
+                    "location_name": sensor_data["location_name"],
+                    "distance": sensor_data["distance"],
+                    "unit": sensor_data["unit"]
+                }
+                break
+
     api_client.close()
     return measurements
-
-print(get_measurements("kraków","2026-09-10","2026-09-12"))
-# import urllib
-#
-# import requests
-# from geopy.geocoders import Nominatim
-#
-# #TU WSTAW SWÓJ API_KEY Z explore.openaq.org >> zakładka settings
-# API_KEY =""
-#
-# def find_location(city):
-#     city = city.capitalize()
-#     geolocator = Nominatim(user_agent="coords_finder")
-#     location = geolocator.geocode(city)
-#     if location is None:
-#         return None
-#     latitude = location.latitude
-#     longitude = location.longitude
-#     return f"{latitude},{longitude}"
-#
-#
-# def get_data_from_api(city):
-#     coordinates = find_location(city)
-#     url = "https://api.openaq.org/v3/parameters/2/"
-#     headers = {"X-Api-Key": API_KEY}
-#     params = {
-#         "coordinates": coordinates,
-#         "radius": 25000,
-#         "limit": 5
-#     }
-#     response = requests.get(url, headers=headers, params=params)
-#     print(response)
-#     if response.status_code == 200:
-#         return response.json()
-#     else:
-#         return None
-#
-#
-# def get_air_quality(city,date=None):
-#
-#     data = get_data_from_api(city)
-#     return data
-#
-# print(get_data_from_api("Wrocław"))
