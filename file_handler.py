@@ -1,17 +1,15 @@
 from openaq import OpenAQ
 from geopy.geocoders import Nominatim
 
-################################### TU WRZUĆ SWÓJ API KEY Z explore.openaq.org >> zakładka settings ##################################################3
+################## TU WRZUĆ SWÓJ API KEY Z explore.openaq.org >> zakładka settings ###################################
 API_KEY = ""
-
-
 
 def find_location(city):
     geolocator = Nominatim(user_agent="coordinates_finder")
-    place = geolocator.geocode(city.capitalize())
-    if place is None:
+    coordinates = geolocator.geocode(city.capitalize())
+    if coordinates is None:
         return None
-    return place.latitude, place.longitude
+    return coordinates.latitude, coordinates.longitude
 
 
 def get_sensors(city):

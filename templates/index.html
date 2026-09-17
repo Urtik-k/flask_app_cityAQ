@@ -3,11 +3,14 @@
 
     <h1>Sprawdź jakość powietrza!</h1>
     <form method="post">
+        <label for="city_id"> Wpisz nazwę miasta: </label>
         <input type="text" name="city" id="city_id" required>
         <br>
-        <input type="date" name="start_date" required>
+        <label for="start_date">Wybierz zakres początkowy pomiarów: </label>
+        <input type="date" name="start_date" id="start_date" required>
         <br>
-        <input type="date" name="end_date" required>
+        <label for="end_date">Wybierz zakres końcowy pomiarów: </label>
+        <input type="date" name="end_date" id="end_date" required>
         <button type="submit">Sprawdź</button>
     </form>
 {% endblock %}
