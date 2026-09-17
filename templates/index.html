@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-
+<div id="aq_form">
     <h1>Sprawdź jakość powietrza!</h1>
     <form method="post">
         <label for="city_id"> Wpisz nazwę miasta: </label>
@@ -13,4 +13,5 @@
         <input type="date" name="end_date" id="end_date" required>
         <button type="submit">Sprawdź</button>
     </form>
+</div>
 {% endblock %}

@@ -1,6 +1,15 @@
 #nav_bar{
     display: flex;
+    justify-content: center;
+    gap: 1vw
 }
 #footer{
-
+    display: flex;
+    justify-content: center;
+    margin: 10vh;
+}
+#aq_form{
+    display: grid;
+    justify-content: center;
+    margin: 5vh;
 }
