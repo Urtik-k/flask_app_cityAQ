@@ -1,6 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>TESTING</h1>
+<h1>Wyniki dla {{ city }}</h1>
 
+<p>
+    Okres: {{ start_date }} - {{ end_date }}
+</p>
+
+{% if data %}
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>PM2.5</th>
+            <th>PM10</th>
+            <th>NO2</th>
+            <th>CO</th>
+            <th>O3</th>
+            <th>SO2</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for date, measurements in data.items() %}
+        <tr>
+            <td>{{ date }}</td>
+
+            <td>{{ measurements.get('pm25', '-') }}</td>
+            <td>{{ measurements.get('pm10', '-') }}</td>
+            <td>{{ measurements.get('no2', '-') }}</td>
+            <td>{{ measurements.get('co', '-') }}</td>
+            <td>{{ measurements.get('o3', '-') }}</td>
+            <td>{{ measurements.get('so2', '-') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+    <h2>Brak wyników 😭</h2>
+    <img src="{{ url_for('static', filename='images/idk_boss.png') }}"
+         alt="Brak wyników"
+         width="400">
+
+{% endif %}
 {% endblock %}

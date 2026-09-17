@@ -1,8 +1,10 @@
 from openaq import OpenAQ
 from geopy.geocoders import Nominatim
 
-####### TU WRZUĆ SWÓJ API KEY Z explore.openaq.org >> zakładka settings
+################################### TU WRZUĆ SWÓJ API KEY Z explore.openaq.org >> zakładka settings ##################################################3
 API_KEY = ""
+
+
 
 def find_location(city):
     geolocator = Nominatim(user_agent="coordinates_finder")
@@ -75,3 +77,18 @@ def get_measurements(city, start_date, end_date):
 
     api_client.close()
     return measurements
+
+def prepare_table_data(measurements):
+
+    table_data = {}
+
+    for parameter, parameter_data in measurements.items():
+        for measurement in parameter_data["results"]:
+            measurement_date = measurement.period.datetime_from.local[:10]
+
+            if measurement_date not in table_data:
+                table_data[measurement_date] = {}
+
+            table_data[measurement_date][parameter] = measurement.value
+
+    return table_data

@@ -8,11 +8,15 @@ def main_page():
         city = request.form['city']
         start_date = request.form['start_date']
         end_date = request.form['end_date']
-        data = file_handler.get_measurements(city, start_date=start_date, end_date=end_date)
-        return render_template('index.html', city=city, start_date=start_date, end_date=end_date, data=data)
+        measurements = file_handler.get_measurements(city, start_date=start_date, end_date=end_date)
+        data = file_handler.prepare_table_data(measurements)
+        # session["data"]=data
+        print(measurements)
+        return render_template('history.html', city=city, start_date=start_date, end_date=end_date, data=data)
     return render_template('index.html')
 
 @url_routes.route('/history/')
-@url_routes.route('/history/<city>/<date>')
-def aq_history(city=None, date=None):
-    return render_template('history.html',city=city,date=date)
+@url_routes.route('/history/<city>/<start_date>/<end_date>')
+def aq_history(city=None, start_date=None, end_date=None):
+    # data = session["data"]
+    return render_template('history.html',city=city,start_date=start_date,end_date=end_date)
