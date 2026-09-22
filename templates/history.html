@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
+{% if city and start_date and end_date %}
 
 <h1>Wyniki dla {{ city }}</h1>
 
 <p>
     Okres: {{ start_date }} - {{ end_date }}
 </p>
+{% else %}
+
+    <h1>tutaj będą wszystkie wynki z bazy danych po podpięciu</h1>
+
+{% endif %}
+
 
 {% if data %}
 

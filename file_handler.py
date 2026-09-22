@@ -88,5 +88,6 @@ def prepare_table_data(measurements):
                 table_data[measurement_date] = {}
 
             table_data[measurement_date][parameter] = measurement.value
-
+    print(table_data)
+    return table_data
     return table_data
