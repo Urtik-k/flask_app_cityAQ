@@ -1,6 +1,6 @@
 # AirQuality Dashboard
 
-Aplikacja webowa umożliwiająca wyszukiwanie, przechowywanie i przeglądanie historycznych danych dotyczących jakości powietrza w wybranych miastach.
+Aplikacja webowa umożliwiająca wyszukiwanie, przechowywanie i przeglądanie historycznych danych dotyczących jakości powietrza w wybranych miastach wykorzystując API OpenAQ.
 
 ## Opis projektu
 
