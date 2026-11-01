@@ -58,8 +58,8 @@ Projekt powstał w ramach samodzielnej nauki języka Python i rozwijania umieję
 1. Sklonuj repozytorium:
 
    ```bash
-   git clone ADRES_REPOZYTORIUM
-   cd NAZWA_PROJEKTU
+   git clone https://github.com/Urtik-k/flask_app_cityAQ.git
+   cd flask_app_cityAQ
    ```
 
 2. Utwórz środowisko wirtualne:
