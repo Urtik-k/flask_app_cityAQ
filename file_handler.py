@@ -1,3 +1,4 @@
+import csv, io
 from openaq import OpenAQ
 from geopy.geocoders import Nominatim
 from database import db
@@ -111,28 +112,22 @@ def get_dates_range(start_date, end_date):
 def search_db(city,start_date,end_date):
     requested_dates = get_dates_range(start_date, end_date)
 
-    print("REQUESTED DATES:", requested_dates)
-
     db_records = Measurement.query.filter(
         Measurement.city == city,
         Measurement.date >= requested_dates[0],
         Measurement.date <= requested_dates[-1]
     ).all()
 
-    print("DB RECORDS:", db_records)
 
     available_dates = {
         record.date for record in db_records
     }
-
-    print("AVAILABLE DATES:", available_dates)
 
 
     missing_dates = [
         date for date in requested_dates if date not in available_dates
     ]
 
-    print("MISSING DATES:", missing_dates)
 
     return missing_dates
 
@@ -192,3 +187,34 @@ def save_to_db(city,data):
         db.session.add(new_measurement)
 
     db.session.commit()
+
+
+def data_to_csv(data):
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    writer.writerow([
+        "date",
+        "pm25",
+        "pm10",
+        "no2",
+        "co",
+        "o3",
+        "so2"
+    ])
+
+    for date, measurement in data.items():
+        writer.writerow([
+            date,
+            measurement.get("pm25",""),
+            measurement.get("pm10",""),
+            measurement.get("no2",""),
+            measurement.get("co",""),
+            measurement.get("o3",""),
+            measurement.get("so2","")
+        ])
+
+    return output.getvalue()
+
+
+

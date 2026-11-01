@@ -37,7 +37,7 @@
                     <p>Liczba dni z danymi: {{ data|length }}</p>
                 </div>
 
-                <a href="#" class="csv-button" id="export-csv">
+                <a href="{{ url_for('url_routes.download', city=city) }}" class="csv-button" id="export-csv">
                     <span>↓</span> Pobierz plik .CSV
                 </a>
             </div>

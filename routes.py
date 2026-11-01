@@ -1,5 +1,4 @@
-from flask import Blueprint, render_template, request
-from datetime import datetime, timedelta
+from flask import Blueprint, render_template, request, Response
 import file_handler
 from database import db
 from models import Measurement
@@ -19,14 +18,12 @@ def main_page():
         db_data = file_handler.get_from_db(city, start_date, end_date)
 
         if missing_dates:
-            print(f'missing_dates found')
             api_data = file_handler.get_measurements(city,
                                                      str(min(missing_dates)),
                                                      str(max(missing_dates)))
             if api_data:
                 new_data = file_handler.prepare_table_data(api_data)
                 file_handler.save_to_db(city, new_data)
-                print(f'SAVING TO DB {city} : {new_data}')
 
                 for date, parameters in new_data.items():
                     if date not in db_data:
@@ -65,5 +62,22 @@ def aq_history(city=None):
         cities=None,
         city=city,
         data=data
+    )
+
+
+@url_routes.route('/download<city>')
+def download(city):
+    data = file_handler.get_from_db(city)
+
+    if not data:
+        return "brak danych do pobrania", 404
+
+    csv_data = file_handler.data_to_csv(data)
+    return Response(
+        "\ufeff" + csv_data,
+        mimetype='text/csv; charset=utf-8',
+        headers={'Content-Disposition':
+                     f'attachment; filename="air_quality_{city}.csv"'
+                 }
     )
 
