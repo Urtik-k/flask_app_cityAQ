@@ -5,7 +5,7 @@ from models import Measurement
 from datetime import datetime, timedelta
 
 ################## TU WRZUĆ SWÓJ API KEY Z explore.openaq.org >> zakładka settings ###################################
-API_KEY = "6f39f8046b63a80367cb92314214d2d03bbb7aeefe512c034262e81a3df2e561"
+API_KEY = ""
 
 def find_location(city):
     geolocator = Nominatim(user_agent="coordinates_finder")
@@ -136,16 +136,22 @@ def search_db(city,start_date,end_date):
 
     return missing_dates
 
-def get_from_db(city,start_date,end_date):
+def get_from_db(city, start_date=None, end_date=None):
 
-    start = datetime.strptime(start_date, "%Y-%m-%d").date()
-    end = datetime.strptime(end_date, "%Y-%m-%d").date()
+    query = Measurement.query.filter(
+        Measurement.city == city
+    )
 
-    records = Measurement.query.filter(
-        Measurement.city == city,
-        Measurement.date >= start,
-        Measurement.date <= end
-    ).all()
+    if start_date and end_date:
+        start = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end = datetime.strptime(end_date, "%Y-%m-%d").date()
+
+        query = query.filter(
+            Measurement.date >= start,
+            Measurement.date <= end
+        )
+
+    records = query.order_by(Measurement.date).all()
 
     table_data = {}
 

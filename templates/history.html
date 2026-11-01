@@ -1,57 +1,141 @@
 {% extends "base.html" %}
-{% block title %}History{% endblock %}
+
+{% block title %}AirQuality — Historia{% endblock %}
+
 {% block content %}
-{% if city and start_date and end_date %}
 
-<h1>Wyniki dla {{ city }}</h1>
+<section class="results-section">
 
-<p>
-    Okres: {{ start_date }} - {{ end_date }}
-</p>
-{% else %}
+    {% if city %}
 
-    <h1>tutaj będą wszystkie wynki z bazy danych po podpięciu</h1>
+        <div class="results-header">
+            <div>
+                <div class="hero-badge">
+                    <span class="status-dot"></span>
+                    ARCHIWUM POMIARÓW
+                </div>
 
-{% endif %}
+                <h1>Miasto: <span>{{ city }}</span></h1>
 
+                <p class="results-period">
+                    Wszystkie zapisane pomiary dla wybranej lokalizacji.
+                </p>
+            </div>
 
-{% if data %}
+            <a href="{{ url_for('url_routes.aq_history') }}"
+               class="back-button">
+                ← Wszystkie miasta
+            </a>
+        </div>
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Data</th>
-            <th>PM2.5</th>
-            <th>PM10</th>
-            <th>NO2</th>
-            <th>CO</th>
-            <th>O3</th>
-            <th>SO2</th>
-        </tr>
-    </thead>
+        {% if data %}
 
-    <tbody>
-        {% for date, measurements in data.items() %}
-        <tr>
-            <td>{{ date }}</td>
+        <div class="table-card">
+            <div class="table-heading">
+                <div>
+                    <h2>Wyniki pomiarów</h2>
+                    <p>Liczba dni z danymi: {{ data|length }}</p>
+                </div>
 
-            <td>{{ measurements.get('pm25', '-') }}</td>
-            <td>{{ measurements.get('pm10', '-') }}</td>
-            <td>{{ measurements.get('no2', '-') }}</td>
-            <td>{{ measurements.get('co', '-') }}</td>
-            <td>{{ measurements.get('o3', '-') }}</td>
-            <td>{{ measurements.get('so2', '-') }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                <a href="#" class="csv-button" id="export-csv">
+                    <span>↓</span> Pobierz plik .CSV
+                </a>
+            </div>
 
-{% else %}
+            <div class="table-responsive">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>PM2.5</th>
+                            <th>PM10</th>
+                            <th>NO₂</th>
+                            <th>CO</th>
+                            <th>O₃</th>
+                            <th>SO₂</th>
+                        </tr>
+                    </thead>
 
-    <h2>Brak wyników 😭</h2>
-    <img src="{{ url_for('static', filename='images/idk_boss.png') }}"
-         alt="Brak wyników"
-         width="400">
+                    <tbody>
+                        {% for date, measurements in data.items() %}
+                        <tr>
+                            <td class="date-cell">{{ date }}</td>
+                            <td>{{ measurements.get('pm25', '-') }}</td>
+                            <td>{{ measurements.get('pm10', '-') }}</td>
+                            <td>{{ measurements.get('no2', '-') }}</td>
+                            <td>{{ measurements.get('co', '-') }}</td>
+                            <td>{{ measurements.get('o3', '-') }}</td>
+                            <td>{{ measurements.get('so2', '-') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-{% endif %}
+        {% else %}
+
+        <div class="empty-state">
+            <div class="empty-icon">☁</div>
+            <h2>Brak wyników</h2>
+            <p>Nie znaleziono pomiarów dla tego miasta.</p>
+        </div>
+
+        {% endif %}
+
+    {% else %}
+
+        <div class="results-header">
+            <div>
+                <div class="hero-badge">
+                    <span class="status-dot"></span>
+                    ARCHIWUM DANYCH
+                </div>
+
+                <h1>Historia <span>pomiarów</span></h1>
+
+                <p class="results-period">
+                    Wybierz miasto, aby zobaczyć zapisane pomiary.
+                </p>
+            </div>
+        </div>
+
+        <div class="cities-grid">
+
+            {% for city_name in cities %}
+
+            <a href="{{ url_for('url_routes.aq_history', city=city_name) }}"
+               class="city-card">
+
+                <div class="city-card-icon">⌖</div>
+
+                <div>
+                    <h2>{{ city_name }}</h2>
+                    <p>Zobacz historię pomiarów</p>
+                </div>
+
+                <span class="city-arrow">→</span>
+
+            </a>
+
+            {% else %}
+
+            <div class="empty-state">
+                <div class="empty-icon">☁</div>
+                <h2>Baza jest pusta</h2>
+                <p>Nie masz jeszcze zapisanych pomiarów.</p>
+                <a href="{{ url_for('url_routes.main_page') }}"
+                   class="submit-button empty-button">
+                    Dodaj pierwsze pomiary →
+                </a>
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</section>
+
 {% endblock %}

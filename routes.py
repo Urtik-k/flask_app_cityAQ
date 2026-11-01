@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 from datetime import datetime, timedelta
 import file_handler
+from database import db
 from models import Measurement
 url_routes = Blueprint('url_routes', __name__,
                        template_folder='templates',
@@ -40,9 +41,29 @@ def main_page():
     return render_template('index.html')
 
 @url_routes.route('/history/')
-@url_routes.route('/history/<city>/<start_date>/<end_date>')
-def aq_history(city=None, start_date=None, end_date=None):
-    measurements = Measurement.query.all()
-    return str(measurements)
-    # return render_template('history.html',city=city,start_date=start_date,end_date=end_date)
+@url_routes.route('/history/<city>/')
+def aq_history(city=None):
+
+    if city is None:
+        cities = db.session.query(
+            Measurement.city
+        ).distinct().order_by(Measurement.city).all()
+
+        cities = [item[0] for item in cities]
+
+        return render_template(
+            'history.html',
+            cities=cities,
+            city=None,
+            data=None
+        )
+
+    data = file_handler.get_from_db(city, None, None)
+
+    return render_template(
+        'history.html',
+        cities=None,
+        city=city,
+        data=data
+    )
 

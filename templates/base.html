@@ -1,20 +1,42 @@
 <!DOCTYPE html>
-<html lang="pl" data-bs-theme="light">
+<html lang="pl" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title%}Default{%endblock%}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-</head>
-<body>
-    <nav id="nav_bar">
-        <button><a href="{{url_for('url_routes.main_page')}}">Strona główna</a></button>
-        <button><a href="{{url_for('url_routes.aq_history')}}">Historia</a></button>
-    </nav>
-    {%block content%}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {%endblock%}
-    <h6 id="footer">Copyright @2026 lorem ipsum blablablabala</h6>
+    <title>{% block title %}Air Quality{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='javascript/bootstrap.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='javascript/script.js') }}" defer></script>
+</head>
+
+<body>
+
+    <nav class="navbar-custom">
+        <a href="{{ url_for('url_routes.main_page') }}" class="brand">
+            <span class="brand-icon">◉</span>
+            Air<span>Quality</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('url_routes.main_page') }}">Strona główna</a>
+            <a href="{{ url_for('url_routes.aq_history') }}">Historia pomiarów</a>
+        </div>
+    </nav>
+
+    <main class="page-container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>AirQuality Dashboard <span>·</span> Dane o jakości powietrza</p>
+    </footer>
+
 </body>
 </html>
