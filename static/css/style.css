@@ -517,3 +517,15 @@ body {
 .city-card:hover .city-arrow {
     transform: translateX(5px);
 }
+/* Komunikaty o błędach */
+
+.alert-box {
+    margin: 0 0 20px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 120, 120, 0.4);
+    border-radius: 12px;
+    background: rgba(255, 120, 120, 0.1);
+    color: #ffb4b4;
+    font-size: 14px;
+    line-height: 1.5;
+}

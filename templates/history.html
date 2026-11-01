@@ -18,7 +18,11 @@
                 <h1>Miasto: <span>{{ city }}</span></h1>
 
                 <p class="results-period">
+                    {% if start_date and end_date %}
+                    Zakres dat: {{ start_date }} – {{ end_date }}
+                    {% else %}
                     Wszystkie zapisane pomiary dla wybranej lokalizacji.
+                    {% endif %}
                 </p>
             </div>
 
@@ -27,6 +31,12 @@
                 ← Wszystkie miasta
             </a>
         </div>
+
+        {% if warning %}
+        <div class="alert-box" role="alert">
+            {{ warning }} Poniżej widać tylko dane zapisane już w bazie.
+        </div>
+        {% endif %}
 
         {% if data %}
 
@@ -60,12 +70,10 @@
                         {% for date, measurements in data.items() %}
                         <tr>
                             <td class="date-cell">{{ date }}</td>
-                            <td>{{ measurements.get('pm25', '-') }}</td>
-                            <td>{{ measurements.get('pm10', '-') }}</td>
-                            <td>{{ measurements.get('no2', '-') }}</td>
-                            <td>{{ measurements.get('co', '-') }}</td>
-                            <td>{{ measurements.get('o3', '-') }}</td>
-                            <td>{{ measurements.get('so2', '-') }}</td>
+                            {% for key in ['pm25', 'pm10', 'no2', 'co', 'o3', 'so2'] %}
+                            {% set value = measurements.get(key) %}
+                            <td>{{ '-' if value is none else value }}</td>
+                            {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
