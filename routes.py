@@ -70,7 +70,7 @@ def main_page():
         return _form_error("Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
                            raw_city, start_date, end_date, 500)
 
-    # Nic do pokazania i był błąd -> wracamy do formularza z komunikatem.
+    # Problem z pobieraniem danych z API i pusta baza db
     if warning and not db_data:
         return _form_error(warning, raw_city, start_date, end_date, 502)
 
@@ -132,3 +132,22 @@ def download(city):
             )
         }
     )
+
+
+@url_routes.route('/delete/<int:pid>',methods=['DELETE'])
+def delete(pid):
+    measurement_to_delete = db.session.get(Measurement, pid)
+
+    if measurement_to_delete is None:
+        return "Nie znaleziono wyniku", 404
+
+    try:
+        db.session.delete(measurement_to_delete)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Błąd podczas usuwania wyniku")
+        return "Problem z usuwaniem wyniku", 500
+
+    return "", 204
+

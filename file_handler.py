@@ -249,6 +249,7 @@ def get_from_db(city, start_date=None, end_date=None):
     for record in records:
         date = record.date.strftime("%Y-%m-%d")
         entry = table_data.setdefault(date, {})
+        entry["id"] = record.id
 
         # Gdyby w bazie były stare duplikaty tego samego dnia, łączymy je:
         # puste wartości nie nadpisują tych, które już mamy.

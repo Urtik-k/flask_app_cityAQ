@@ -34,6 +34,46 @@ document.addEventListener("DOMContentLoaded", () => {
             button.style.opacity = "0.7";
         });
     }
+    // Usuwanie pomiaru z tabeli (jeden listener na całą tabelę)
+    const tableBody = document.querySelector(".custom-table tbody");
+
+    if (tableBody) {
+        tableBody.addEventListener("click", async (event) => {
+            const deleteButton = event.target.closest(".delete-button");
+            if (!deleteButton) return;
+
+            const row = deleteButton.closest("tr");
+            const dateText = row.querySelector(".date-cell").textContent.trim();
+
+            if (!confirm(`Usunąć pomiar z dnia ${dateText}?`)) return;
+
+            deleteButton.disabled = true;
+
+            try {
+                const response = await fetch(deleteButton.dataset.url, {
+                    method: "DELETE"
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Serwer odpowiedział kodem ${response.status}`);
+                }
+
+                row.remove();
+
+                const remaining = tableBody.querySelectorAll("tr").length;
+                const counter = document.getElementById("rows-count");
+                if (counter) counter.textContent = remaining;
+
+                // Brak wierszy -> odśwież stronę, żeby pokazać komunikat "Brak wyników"
+                if (remaining === 0) window.location.reload();
+
+            } catch (error) {
+                console.error(error);
+                deleteButton.disabled = false;
+                alert("Nie udało się usunąć pomiaru. Spróbuj ponownie.");
+            }
+        });
+    }
 
     // Pojawianie się elementów
     const animatedElements = document.querySelectorAll(
@@ -52,3 +92,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
