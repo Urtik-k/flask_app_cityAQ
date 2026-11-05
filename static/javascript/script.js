@@ -34,20 +34,57 @@ document.addEventListener("DOMContentLoaded", () => {
             button.style.opacity = "0.7";
         });
     }
-    // Usuwanie pomiaru z tabeli (jeden listener na całą tabelę)
-    const tableBody = document.querySelector(".custom-table tbody");
 
-    if (tableBody) {
-        tableBody.addEventListener("click", async (event) => {
+    // Usuwanie pomiaru z tabeli z własnym oknem potwierdzenia
+    const tableBody = document.querySelector(".custom-table tbody");
+    const dialog = document.getElementById("confirm-dialog");
+
+    if (tableBody && dialog) {
+        const dateLabel = document.getElementById("confirm-date");
+        const errorBox = document.getElementById("confirm-error");
+        const yesButton = document.getElementById("confirm-yes");
+        const noButton = document.getElementById("confirm-no");
+
+        let pendingButton = null;   // kosz, który został kliknięty
+
+        // Kliknięcie kosza tylko otwiera okno
+        tableBody.addEventListener("click", (event) => {
             const deleteButton = event.target.closest(".delete-button");
             if (!deleteButton) return;
 
+            pendingButton = deleteButton;
+            dateLabel.textContent = deleteButton
+                .closest("tr")
+                .querySelector(".date-cell")
+                .textContent.trim();
+
+            errorBox.hidden = true;
+            yesButton.disabled = false;
+            noButton.disabled = false;
+
+            dialog.showModal();
+        });
+
+        // Anuluj, klawisz Esc (obsługuje przeglądarka) i kliknięcie w tło zamykają okno
+        noButton.addEventListener("click", () => dialog.close());
+
+        dialog.addEventListener("click", (event) => {
+            if (event.target === dialog) dialog.close();
+        });
+
+        dialog.addEventListener("close", () => {
+            pendingButton = null;
+        });
+
+        // Potwierdź wysyła żądanie DELETE
+        yesButton.addEventListener("click", async () => {
+            if (!pendingButton) return;
+
+            const deleteButton = pendingButton;
             const row = deleteButton.closest("tr");
-            const dateText = row.querySelector(".date-cell").textContent.trim();
 
-            if (!confirm(`Usunąć pomiar z dnia ${dateText}?`)) return;
-
-            deleteButton.disabled = true;
+            yesButton.disabled = true;
+            noButton.disabled = true;
 
             try {
                 const response = await fetch(deleteButton.dataset.url, {
@@ -59,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 row.remove();
+                dialog.close();
 
                 const remaining = tableBody.querySelectorAll("tr").length;
                 const counter = document.getElementById("rows-count");
@@ -69,8 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } catch (error) {
                 console.error(error);
-                deleteButton.disabled = false;
-                alert("Nie udało się usunąć pomiaru. Spróbuj ponownie.");
+                errorBox.textContent = "Nie udało się usunąć wyniku. Spróbuj ponownie.";
+                errorBox.hidden = false;
+                yesButton.disabled = false;
+                noButton.disabled = false;
             }
         });
     }
@@ -92,5 +132,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-
-

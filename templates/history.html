@@ -99,6 +99,20 @@
                 </table>
             </div>
         </div>
+        <dialog id="confirm-dialog" class="confirm-dialog">
+            <div class="confirm-box">
+                <h3 class="confirm-title">Usunąć wynik?</h3>
+                <p class="confirm-text">
+                    Czy na pewno chcesz usunąć wynik z dnia
+                    <strong id="confirm-date"></strong>?
+                </p>
+                <p class="confirm-error" id="confirm-error" hidden></p>
+                <div class="confirm-actions">
+                    <button type="button" class="confirm-btn confirm-btn-yes" id="confirm-yes">Potwierdź</button>
+                    <button type="button" class="confirm-btn confirm-btn-no" id="confirm-no">Anuluj</button>
+                </div>
+            </div>
+        </dialog>
 
         {% else %}
 
