@@ -1,0 +1,63 @@
+/* Lista miast */
+
+.cities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.city-card {
+    min-height: 125px;
+    padding: 23px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(145deg, #17231e, #101815);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.city-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 224, 163, 0.45);
+    background: #192922;
+}
+
+.city-card-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(139, 224, 163, 0.1);
+    color: var(--green);
+    font-size: 30px;
+}
+
+.city-card h2 {
+    margin: 0 0 7px;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.city-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.city-arrow {
+    margin-left: auto;
+    color: var(--green);
+    font-size: 23px;
+    transition: transform 0.2s;
+}
+
+.city-card:hover .city-arrow {
+    transform: translateX(5px);
+}

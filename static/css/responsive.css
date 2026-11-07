@@ -1,0 +1,38 @@
+/* Telefon i tablet */
+
+@media (max-width: 650px) {
+    .navbar-custom {
+        height: auto;
+        min-height: 75px;
+        padding: 18px 5%;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        gap: 22px;
+    }
+
+    .hero {
+        margin: 55px auto;
+    }
+
+    .form-card {
+        padding: 23px 18px;
+    }
+
+    .date-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .results-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

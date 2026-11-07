@@ -1,0 +1,50 @@
+/* Strona główna */
+
+.hero {
+    max-width: 720px;
+    margin: 85px auto;
+    text-align: center;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 15px;
+    border: 1px solid rgba(139, 224, 163, 0.2);
+    border-radius: 30px;
+    background: rgba(139, 224, 163, 0.07);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+.hero h1,
+.results-header h1 {
+    margin: 25px 0 15px;
+    font-size: clamp(35px, 6vw, 55px);
+    font-weight: 800;
+    letter-spacing: -2.5px;
+}
+
+.hero h1 span,
+.results-header h1 span {
+    color: var(--green);
+}
+
+.hero-description {
+    max-width: 550px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+}

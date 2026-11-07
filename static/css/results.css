@@ -1,0 +1,107 @@
+/* Wyniki */
+
+.results-section {
+    padding: 65px 0;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.results-header h1 {
+    font-size: clamp(30px, 5vw, 42px);
+    letter-spacing: -1.5px;
+}
+
+.results-period {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.back-button {
+    padding: 12px 17px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--green);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.back-button:hover {
+    background: var(--surface-light);
+    color: var(--green);
+}
+
+/* Tabela */
+
+.table-card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--surface);
+}
+
+.table-heading {
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.data-badge {
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: rgba(139, 224, 163, 0.09);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.custom-table {
+    margin: 0;
+    color: var(--text);
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.custom-table thead th {
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #18241f;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.custom-table tbody td {
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    color: #d5e2d9;
+    font-size: 13px;
+}
+
+.custom-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.custom-table tbody tr:hover td {
+    background: rgba(139, 224, 163, 0.045);
+}
+
+.custom-table .date-cell {
+    color: var(--green);
+    font-weight: 700;
+}

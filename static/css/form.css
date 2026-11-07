@@ -1,0 +1,120 @@
+/* Formularz */
+
+.form-card {
+    margin-top: 45px;
+    padding: 35px;
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: linear-gradient(145deg, #17231e, #101815);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.card-heading h2,
+.table-heading h2 {
+    margin: 0 0 7px;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.card-heading p,
+.table-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.card-icon {
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: rgba(139, 224, 163, 0.1);
+    color: var(--green);
+    font-size: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    color: #c5d3ca;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: #0c1411;
+    color: var(--text);
+    font: inherit;
+    transition: border 0.2s, box-shadow 0.2s;
+    color-scheme: dark;
+}
+
+.form-group input:focus {
+    border-color: var(--green-dark);
+    box-shadow: 0 0 0 3px rgba(139, 224, 163, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #607168;
+}
+
+.date-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.submit-button {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    background: var(--green);
+    color: #102018;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.submit-button:hover {
+    background: #a5efb8;
+    color: #102018;
+    transform: translateY(-2px);
+}
+
+.button-arrow {
+    font-size: 22px;
+}
+
+.form-hint {
+    margin: 16px 0 0;
+    color: var(--muted);
+    text-align: center;
+    font-size: 11px;
+}

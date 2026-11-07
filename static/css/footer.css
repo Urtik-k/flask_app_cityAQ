@@ -1,0 +1,17 @@
+/* Stopka */
+
+.footer {
+    padding: 25px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer span {
+    color: var(--green);
+}

@@ -9,8 +9,11 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/bootstrap.css') }}">
 
+    {% for name in ['base', 'navbar', 'home', 'form', 'results',
+                    'components', 'history', 'delete', 'footer', 'responsive'] %}
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+          href="{{ url_for('static', filename='css/' ~ name ~ '.css') }}">
+    {% endfor %}
 
     <script src="{{ url_for('static', filename='javascript/bootstrap.js') }}" defer></script>
     <script src="{{ url_for('static', filename='javascript/script.js') }}" defer></script>

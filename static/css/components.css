@@ -1,0 +1,50 @@
+/* Brak wyników */
+
+.empty-state {
+    margin: 35px auto;
+    padding: 50px 25px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface);
+    text-align: center;
+}
+
+.empty-icon {
+    margin-bottom: 15px;
+    color: var(--green);
+    font-size: 55px;
+}
+
+.empty-state h2 {
+    font-weight: 800;
+}
+
+.empty-state p {
+    color: var(--muted);
+}
+
+.empty-button {
+    max-width: 280px;
+    margin: 25px auto;
+    justify-content: center;
+}
+
+.empty-image {
+    display: block;
+    width: min(300px, 90%);
+    margin: 20px auto 0;
+    border-radius: 12px;
+}
+
+/* Komunikaty o błędach */
+
+.alert-box {
+    margin: 0 0 20px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 120, 120, 0.4);
+    border-radius: 12px;
+    background: rgba(255, 120, 120, 0.1);
+    color: #ffb4b4;
+    font-size: 14px;
+    line-height: 1.5;
+}
